@@ -25,7 +25,16 @@
     "jsx-a11y",
     "import"
   ],
+  "settings": {
+    "import/resolver": "parcel2"
+  },
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["^pages/.+"]
+      }
+    ]
   }
 }
