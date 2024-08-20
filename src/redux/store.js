@@ -1,8 +1,16 @@
-// /redux/store.js
-import { createStore, applyMiddleware } from 'redux'
-import { thunk } from 'redux-thunk'
-import rootReducer from './reducers/rootReducer'
+import { configureStore } from '@reduxjs/toolkit'
+import { api } from '../api/apiSlice'
+import userReducer from '../components/features/IntroDetailsForm/userIntroDetailsSlice'
+import authReducer from '../components/features/auth/authSlice'
+// https://redux.js.org/usage/migrating-to-modern-redux
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
-
+const store = configureStore({
+  reducer: {
+    [api.reducerPath]: api.reducer,
+    users: userReducer,
+    auth: authReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
+})
 export default store

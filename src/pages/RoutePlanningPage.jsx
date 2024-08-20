@@ -1,10 +1,10 @@
 import React from 'react'
-import UserFormContainer from '../containers/UserFormContainer'
+import RouteFormContainer from '../components/features/RouteDetailsForm/RouteFormContainer'
 
 const RoutePlanningPage = () => {
   return (
     <div>
-      <UserFormContainer />
+      <RouteFormContainer />
     </div>
   )
 }

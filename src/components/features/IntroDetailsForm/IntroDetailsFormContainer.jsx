@@ -1,10 +1,8 @@
-// /containers/UserFormContainer.js
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import UserForm from '../components/presentational/UserForm/UserForm'
-import { saveUserData } from '../redux/actions/userActions'
+import IntroDetailsForm from './IntroDetailsForm'
+import { useGetRoutesQuery, useUpdateTodoMutation } from '../../../api/apiSlice'
 
-const UserFormContainer = () => {
+const IntroDetailsFormContainer = () => {
   const [formData, setFormData] = useState({
     carType: '',
     fuelType: '',
@@ -16,8 +14,6 @@ const UserFormContainer = () => {
     saveTrip: false,
   })
 
-  const dispatch = useDispatch()
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setFormData({
@@ -28,17 +24,20 @@ const UserFormContainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(saveUserData(formData))
+    const { data: todos, isFetching, isSuccess } = useUpdateTodoMutation()
     // Redirect to /find or other route as needed
   }
 
   return (
-    <UserForm
-      values={formData}
-      onChange={handleChange}
-      onSubmit={handleSubmit}
-    />
+    <div className="container mt-5">
+      <h2>Plan Your Route</h2>
+      <IntroDetailsForm
+        values={formData}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+      />
+    </div>
   )
 }
 
-export default UserFormContainer
+export default IntroDetailsFormContainer
