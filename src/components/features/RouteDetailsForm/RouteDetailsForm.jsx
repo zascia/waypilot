@@ -1,51 +1,59 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from '../../common/Input'
+import Autocomplete from 'react-google-autocomplete'
+// https://www.npmjs.com/package/react-google-autocomplete
 import Switcher from '../../common/Switcher'
+import Form from 'react-bootstrap/Form'
 import Button from '../../common/Button'
 import './RouteForm.css'
 import { useTranslation } from 'react-i18next'
 
-const RouteDetailsForm = ({ formData, onChange, onSubmit }) => {
+const RouteDetailsForm = ({
+  onChangeFrom,
+  onChangeTo,
+  onChangeSwitcher,
+  onSubmit,
+  switchers,
+}) => {
   const { t } = useTranslation()
-  const doNothing = () => {
-    // This function intentionally does nothing
-  }
 
   return (
     <form onSubmit={onSubmit}>
-      <Input
-        type="text"
+      <Form.Label style={{ color: 'black' }}>From</Form.Label>
+      <Autocomplete
+        apiKey="AIzaSyAokM4l5AEIbBNbq4N7EU7VEOIPO21M3rE"
+        onPlaceSelected={onChangeFrom}
+        inputAutocompleteValue="From"
+        language="en"
         name="from"
-        label="From"
-        value={formData.from}
-        onChange={onChange}
+        className="form-control"
       />
-      <Input
-        type="text"
+      <Form.Label style={{ color: 'black' }}>To</Form.Label>
+      <Autocomplete
+        apiKey="AIzaSyAokM4l5AEIbBNbq4N7EU7VEOIPO21M3rE"
+        onPlaceSelected={onChangeTo}
+        inputAutocompleteValue="To"
+        language="en"
         name="to"
-        label="To"
-        value={formData.to}
-        onChange={onChange}
+        className="form-control"
       />
-
       <Switcher
         name="nightStops"
         label="Night Stops"
-        checked={formData.nightStops}
-        onChange={onChange}
+        checked={switchers.nightStops}
+        onChange={onChangeSwitcher}
       />
       <Switcher
         name="fuelStops"
         label="Fuel Stops"
-        checked={formData.fuelStops}
-        onChange={onChange}
+        checked={switchers.fuelStops}
+        onChange={onChangeSwitcher}
       />
       <Switcher
         name="foodStops"
         label="Food Stops"
-        checked={formData.foodStops}
-        onChange={onChange}
+        checked={switchers.foodStops}
+        onChange={onChangeSwitcher}
       />
       <div className="d-flex justify-content-between">
         <a href="/intro" className="btn btn-secondary">
@@ -55,15 +63,16 @@ const RouteDetailsForm = ({ formData, onChange, onSubmit }) => {
           Next
         </a>
       </div>
-      <Button type="submit" label="Test API" onClick={doNothing} />
+      <Button type="button" label="Test API" onClick={onSubmit} />
     </form>
   )
 }
 
 RouteDetailsForm.propTypes = {
-  formData: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
+  switchers: PropTypes.object.isRequired,
+  onChangeTo: PropTypes.func,
+  onChangeFrom: PropTypes.func,
+  onChangeSwitcher: PropTypes.func,
   onSubmit: PropTypes.func,
 }
-
 export default RouteDetailsForm

@@ -1,58 +1,54 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateFrom, updateTo, toggleSwitcher } from './routeDetailsSlice'
 import RouteDetailsForm from './RouteDetailsForm'
-import { useGetRoutesQuery, useUpdateTodoMutation } from '../../../api/apiSlice'
+import MapComponent from '../../common/RouteMap'
+import {
+  useGetRoutesMutation,
+  useUpdateTodoMutation,
+} from '../../../api/apiSlice'
 
 const RouteFormContainer = () => {
-  const [formData, setFormData] = useState({
-    from: '',
-    to: '',
-    nightStops: false,
-    fuelStops: false,
-    foodStops: false,
-    step1Data: {},
-  })
+  const { from, to, nightStops, fuelStops, foodStops } = useSelector(
+    (state) => state.routeDetails,
+  )
+  const dispatch = useDispatch()
+  const [getRoutes, { isLoading, data, error }] = useGetRoutesMutation()
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    })
+  const onChangeFrom = ({ place_id }) => {
+    dispatch(updateFrom(place_id))
+  }
+  const onChangeTo = ({ place_id }) => {
+    dispatch(updateTo(place_id))
+  }
+  const onChangeSwitcher = (e) => {
+    dispatch(toggleSwitcher(e.target.name))
   }
 
-  const {
-    getRoutes: Routes,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetRoutesQuery()
-
-  /*return (
-    <ul>
-      {Routes.map((route) => (
-        <li key={route.id}>{route.title}</li>
-      ))}
-    </ul>
-  )*/
-  const handleSubmit = async (formData) => {
+  const onSubmit = async (e) => {
+    //e.preventDefault();
     try {
-      await Routes(formData).unwrap()
-      console.log('Route API called successfully')
-    } catch (err) {
-      console.error('Failed to call route API', err)
+      const response = await getRoutes({ from, to }).unwrap()
+      console.log('Success:', response.routes[0])
+    } catch (error) {
+      console.error('Error:', error)
     }
   }
 
   return (
     <div className="container mt-5">
       <h2>Plan Your Route</h2>
-      {isLoading && <h3>Loading...</h3>}
-      {isSuccess && <h3>Route found successfully!</h3>}
-      {isError && <p>Error retrieving a route</p>}
+      <div>
+        {isLoading && <h3>Route is Loading...</h3>}
+        {error && <h3>Error loading routes</h3>}
+        {!!data && <MapComponent routeData={data?.data?.routes[0]} />}
+      </div>
       <RouteDetailsForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+        onChangeFrom={onChangeFrom}
+        onChangeTo={onChangeTo}
+        onChangeSwitcher={onChangeSwitcher}
+        onSubmit={onSubmit}
+        switchers={{ nightStops, fuelStops, foodStops }}
       />
     </div>
   )

@@ -1,20 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({
-    // Fill in your own server starting URL here
-    baseUrl: '/',
-  }),
+  reducerPath: 'routesApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost/WayPilot/backend' }),
   endpoints: (build) => ({
-    // A query endpoint with no arguments
+    /*// A query endpoint with no arguments
     getRoutes: build.query({
       query: () => '/routes',
+    }),*/
+    // A mutation endpoint
+    getRoutes: build.mutation({
+      query: (routeCoords) => ({
+        url: '/find',
+        method: 'POST',
+        body: routeCoords,
+      }),
     }),
-    // A query endpoint with an argument
+    // JUST EXAMPLE A query endpoint with an argument
     userById: build.query({
       query: (userId) => `/users/${userId}`,
     }),
-    // A mutation endpoint
+    // JUST EXAMPLE A mutation endpoint
     updateTodo: build.mutation({
       query: (updatedTodo) => ({
         url: `/todos/${updatedTodo.id}`,
@@ -25,5 +31,5 @@ export const api = createApi({
   }),
 })
 
-export const { useGetRoutesQuery, useUserByIdQuery, useUpdateTodoMutation } =
+export const { useGetRoutesMutation, useUserByIdQuery, useUpdateTodoMutation } =
   api
