@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  GoogleMap,
-  LoadScript,
-  DirectionsRenderer,
-} from '@react-google-maps/api'
+import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api'
 
 const MapComponent = ({ routeData }) => {
   console.log('routeData', routeData)
@@ -44,18 +40,16 @@ const MapComponent = ({ routeData }) => {
   return (
     <div>
       <h3>Route is loaded successfully!</h3>
-      <LoadScript googleMapsApiKey="AIzaSyAokM4l5AEIbBNbq4N7EU7VEOIPO21M3rE">
-        <GoogleMap
-          mapContainerStyle={{ height: '400px', width: '800px' }}
-          center={{
-            lat: routeData.start_location.lat,
-            lng: routeData.start_location.lng,
-          }}
-          zoom={8}
-        >
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        mapContainerStyle={{ height: '400px', width: '800px' }}
+        center={{
+          lat: routeData.start_location.lat,
+          lng: routeData.start_location.lng,
+        }}
+        zoom={8}
+      >
+        {directions && <DirectionsRenderer directions={directions} />}
+      </GoogleMap>
     </div>
   )
 }
