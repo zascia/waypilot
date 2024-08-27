@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const api = createApi({
   reducerPath: 'routesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost/WayPilot/backend' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_LOCAL_SERVER_URL,
+  }),
   endpoints: (build) => ({
     /*// A query endpoint with no arguments
     getRoutes: build.query({

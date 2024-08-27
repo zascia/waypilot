@@ -12,7 +12,11 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
       <h2>Nearby Hotels</h2>
       <ul>
         {routeDetails.hotels.results.map((hotel, index) => (
-          <li key={index}>{hotel.name}</li>
+          <li key={index}>
+            <img alt="" src={hotel.name} />
+            {hotel.name} <address>{hotel.vicinity}</address>
+            <blockquote>Rating: {hotel.rating}</blockquote>
+          </li>
         ))}
       </ul>
     </div>

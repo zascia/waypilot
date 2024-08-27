@@ -21,7 +21,7 @@ const RouteDetailsForm = ({
     <form onSubmit={onSubmit}>
       <Form.Label style={{ color: 'black' }}>From</Form.Label>
       <Autocomplete
-        apiKey="AIzaSyAokM4l5AEIbBNbq4N7EU7VEOIPO21M3rE"
+        apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}
         onPlaceSelected={onChangeFrom}
         inputAutocompleteValue="From"
         language="en"
@@ -30,7 +30,7 @@ const RouteDetailsForm = ({
       />
       <Form.Label style={{ color: 'black' }}>To</Form.Label>
       <Autocomplete
-        apiKey="AIzaSyAokM4l5AEIbBNbq4N7EU7VEOIPO21M3rE"
+        apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}
         onPlaceSelected={onChangeTo}
         inputAutocompleteValue="To"
         language="en"
