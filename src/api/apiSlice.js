@@ -18,6 +18,13 @@ export const api = createApi({
         body: routeCoords,
       }),
     }),
+    getHotelRecommendation: build.mutation({
+      query: (hotels) => ({
+        url: '/recommend',
+        method: 'POST',
+        body: { hotels },
+      }),
+    }),
     // JUST EXAMPLE A query endpoint with an argument
     userById: build.query({
       query: (userId) => `/users/${userId}`,
@@ -33,5 +40,9 @@ export const api = createApi({
   }),
 })
 
-export const { useGetRoutesMutation, useUserByIdQuery, useUpdateTodoMutation } =
-  api
+export const {
+  useGetRoutesMutation,
+  useGetHotelRecommendationMutation,
+  useUserByIdQuery,
+  useUpdateTodoMutation,
+} = api

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { updateFrom, updateTo, toggleSwitcher } from './routeDetailsSlice'
 import RouteDetailsForm from './RouteDetailsForm'
-import MapComponent from '../../common/RouteMap'
 import {
   useGetRoutesMutation,
   useUpdateTodoMutation,
