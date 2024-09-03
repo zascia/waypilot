@@ -24,6 +24,9 @@ const RouteDetailsForm = ({
         apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}
         onPlaceSelected={onChangeFrom}
         inputAutocompleteValue="From"
+        options={{
+          types: ['(cities)'],
+        }}
         language="en"
         name="from"
         className="form-control"
@@ -33,6 +36,9 @@ const RouteDetailsForm = ({
         apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}
         onPlaceSelected={onChangeTo}
         inputAutocompleteValue="To"
+        options={{
+          types: ['(cities)'],
+        }}
         language="en"
         name="to"
         className="form-control"

@@ -7,7 +7,7 @@ import MapComponent from '../../common/RouteMap'
 
 const RouteDetailsResultContainer = ({ routeDetails }) => {
   const routes = routeDetails.routes
-  const hotels = routeDetails.hotels.results
+  const hotels = routeDetails.hotels
   console.log('routes', routes)
   console.log('hotels', hotels)
 
@@ -37,7 +37,7 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
         onClick={onGetRecommendationClick}
         disabled={isLoading}
       >
-        {isLoading ? 'Loading...' : 'Recommend me'}
+        {isLoading ? 'Loading...' : 'Recommend a hotel'}
       </button>
 
       {data && (
@@ -51,8 +51,8 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
       <ul>
         {hotels.map((hotel, index) => (
           <li key={index}>
-            <img alt="" src={hotel.name} />
-            {hotel.name} <address>{hotel.vicinity}</address>
+            {/*<img alt="" src={hotel.icon} />*/}
+            {hotel.name} <address>{hotel.address}</address>
             <blockquote>Rating: {hotel.rating}</blockquote>
           </li>
         ))}
