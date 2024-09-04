@@ -17,9 +17,16 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
     useGetHotelRecommendationMutation()
   const onGetRecommendationClick = async () => {
     try {
-      const response = await getHotelRecommendation(hotels).unwrap()
-      console.log('Recommendation:', response.recommendation)
-      dispatch(setSelectedHotel(response.recommendation)) // Put recommendation into state
+      const hotelsWithCurrentLang = hotels.map((hotel) => ({
+        ...hotel,
+        lang: 'ua',
+      }))
+      const response = await getHotelRecommendation(
+        hotelsWithCurrentLang,
+      ).unwrap()
+      console.log('Recommendation:', response)
+      dispatch(setSelectedHotel(response)) // Put recommendation into state
+      console.log('selectedHotel', selectedHotel)
     } catch (err) {
       console.error('Error fetching recommendation:', err)
     }
@@ -40,10 +47,39 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
         {isLoading ? 'Loading...' : 'Recommend a hotel'}
       </button>
 
-      {data && (
+      {/* Displaying results if data is available */}
+      {selectedHotel && (
         <div className="alert alert-success mt-3">
-          <h4>Recommended Hotel:</h4>
-          <p>{selectedHotel}</p>
+          {/* Show the AI recommendation summary */}
+          <hr style={{ color: 'red' }} />
+          <h3>AI Recommendation:</h3>
+          <p>{selectedHotel.summary}</p>
+
+          {/* Show the list of hotels */}
+          <h4>Recommended Hotels:</h4>
+          <ul>
+            {selectedHotel.hotels.map((hotel) => (
+              <li key={hotel.place_id} style={{ marginBottom: '1em' }}>
+                {hotel.name}
+                <br />
+                <b>Recommended Rank:</b> {hotel.recval}
+                <br />
+                <b>Advantages:</b> {hotel.adv}
+                <br />
+                <b>Disadvantages:</b> {hotel.disadv}
+                <br />
+                <button
+                  type="button"
+                  onClick={() =>
+                    console.log(`Book hotel with place ID: ${hotel.place_id}`)
+                  }
+                >
+                  Book it
+                </button>
+              </li>
+            ))}
+          </ul>
+          <hr style={{ color: 'red' }} />
         </div>
       )}
       {error && <p>Error: {error.message}</p>}
@@ -52,6 +88,13 @@ const RouteDetailsResultContainer = ({ routeDetails }) => {
         {hotels.map((hotel, index) => (
           <li key={index}>
             {/*<img alt="" src={hotel.icon} />*/}
+            {hotel.website !== '' ? (
+              <a href={hotel.website} target="_blank" rel="noopener noreferrer">
+                {hotel.name}
+              </a>
+            ) : (
+              hotel.name
+            )}
             {hotel.name} <address>{hotel.address}</address>
             <blockquote>Rating: {hotel.rating}</blockquote>
           </li>

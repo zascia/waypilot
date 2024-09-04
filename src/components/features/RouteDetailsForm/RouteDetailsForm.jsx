@@ -25,7 +25,7 @@ const RouteDetailsForm = ({
         onPlaceSelected={onChangeFrom}
         inputAutocompleteValue="From"
         options={{
-          types: ['(cities)'],
+          types: ['geocode'],
         }}
         language="en"
         name="from"
@@ -37,7 +37,7 @@ const RouteDetailsForm = ({
         onPlaceSelected={onChangeTo}
         inputAutocompleteValue="To"
         options={{
-          types: ['(cities)'],
+          types: ['geocode'],
         }}
         language="en"
         name="to"

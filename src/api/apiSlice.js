@@ -19,10 +19,10 @@ export const api = createApi({
       }),
     }),
     getHotelRecommendation: build.mutation({
-      query: (hotels) => ({
+      query: (hotelsArray) => ({
         url: '/recommend',
         method: 'POST',
-        body: { hotels },
+        body: hotelsArray,
       }),
     }),
     // JUST EXAMPLE A query endpoint with an argument

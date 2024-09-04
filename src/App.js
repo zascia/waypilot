@@ -10,6 +10,10 @@ import './App.css'
 function App() {
   const { t, i18n } = useTranslation()
 
+  // TODO add translation to all hardcoded texts
+  // TODO Move markup to the clean components where possible
+  // TODO session tokens to make it faster and cheaper https://developers.google.com/maps/documentation/places/web-service/details?hl=ru#session_tokens
+  // TODO ??? implement caching redis?
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng)
   }
